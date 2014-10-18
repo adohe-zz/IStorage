@@ -1,8 +1,9 @@
 package com.xqbase.stroage;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public interface IStorage {
+public interface IStorage extends Closeable {
 
     String DATA_FILE_SUFFIX = ".data";
 
