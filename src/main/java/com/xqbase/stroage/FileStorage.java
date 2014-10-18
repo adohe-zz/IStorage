@@ -13,8 +13,8 @@ import java.nio.channels.FileChannel;
  */
 public class FileStorage implements IStorage {
 
-    private final FileChannel fileChannel;
-    private final RandomAccessFile rf;
+    private FileChannel fileChannel;
+    private RandomAccessFile rf;
 
     public FileStorage(String dir, int index, int capacity) throws IOException {
         File file = new File(dir);
