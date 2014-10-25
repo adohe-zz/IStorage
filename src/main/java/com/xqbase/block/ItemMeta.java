@@ -1,4 +1,6 @@
 package com.xqbase.block;
 
-public class ItemMeta {
+import java.io.Serializable;
+
+public class ItemMeta implements Serializable {
 }
