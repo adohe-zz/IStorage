@@ -21,7 +21,6 @@ public class BlockHead {
         this.blockIndex.set(blockIndex);
     }
 
-
     public byte getBlockFlag() {
         return blockFlag;
     }
