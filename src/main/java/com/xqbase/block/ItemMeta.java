@@ -15,6 +15,7 @@ public class ItemMeta implements Serializable {
     private long ttl;
     private int keySize;
     private int valueSize;
+    private int offset;
 
 
 }

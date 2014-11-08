@@ -81,6 +81,7 @@ public class MapFileStorage implements IStorage {
     }
 
     private static class ThreadLocalByteBuffer extends ThreadLocal<ByteBuffer> {
+
         private ByteBuffer _src;
 
         public ThreadLocalByteBuffer(ByteBuffer src) {

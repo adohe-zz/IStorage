@@ -9,7 +9,7 @@ public class DefaultStorageBlock implements IBlock {
 
     private final int index;
 
-    private final int capacity;
+    private final long capacity;
 
     private StorageConfig.StorageMode storageMode;
 
