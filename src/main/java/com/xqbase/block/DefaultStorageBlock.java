@@ -1,5 +1,6 @@
 package com.xqbase.block;
 
+import com.xqbase.pointer.Pointer;
 import com.xqbase.stroage.*;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ public class DefaultStorageBlock implements IBlock {
 
     private final int index;
 
-    private final int capacity;
+    private final long capacity;
 
     private final StorageConfig.StorageMode storageMode;
 
@@ -51,8 +52,8 @@ public class DefaultStorageBlock implements IBlock {
     }
 
     @Override
-    public void store(byte[] key, byte[] value, long ttl) {
-
+    public Pointer store(byte[] key, byte[] value, long ttl) {
+        return null;
     }
 
     @Override

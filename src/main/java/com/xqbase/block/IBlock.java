@@ -1,5 +1,6 @@
 package com.xqbase.block;
 
+import com.xqbase.pointer.Pointer;
 import com.xqbase.stroage.StorageConfig;
 
 import java.io.Closeable;
@@ -19,7 +20,7 @@ public interface IBlock extends Comparable<IBlock>, Closeable {
      * @param value item value
      * @param ttl time-to-live for item
      */
-    void store(byte[] key, byte[] value, long ttl);
+    Pointer store(byte[] key, byte[] value, long ttl);
 
     /**
      * Mark storage with {@code dirtySize} as dirty
