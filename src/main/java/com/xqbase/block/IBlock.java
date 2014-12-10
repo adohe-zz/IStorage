@@ -7,7 +7,7 @@ import java.io.Closeable;
 public interface IBlock extends Comparable<IBlock>, Closeable {
 
     /**
-     * Get item located at specific position
+     * Get item located at specific position and update the access time
      * @param position the position
      * @return binary content of item
      */

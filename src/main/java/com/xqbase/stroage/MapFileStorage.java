@@ -27,6 +27,7 @@ public class MapFileStorage implements IStorage {
         String fullFileName = dir + index + "-" + System.currentTimeMillis() + DATA_FILE_SUFFIX;
         rf = new RandomAccessFile(fullFileName, "rw");
         fileChannel = rf.getChannel();
+        rf.setLength(capacity);
         MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.PRIVATE, 0, capacity);
         threadLocalByteBuffer = new ThreadLocalByteBuffer(mappedByteBuffer);
     }
@@ -34,6 +35,7 @@ public class MapFileStorage implements IStorage {
     public MapFileStorage(File file, int capacity) throws IOException {
         rf = new RandomAccessFile(file, "rw");
         fileChannel = rf.getChannel();
+        rf.setLength(capacity);
         MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.PRIVATE, 0, capacity);
         threadLocalByteBuffer = new ThreadLocalByteBuffer(mappedByteBuffer);
     }

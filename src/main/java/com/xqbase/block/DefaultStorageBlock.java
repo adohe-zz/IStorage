@@ -11,7 +11,7 @@ public class DefaultStorageBlock implements IBlock {
 
     private final int capacity;
 
-    private StorageConfig.StorageMode storageMode;
+    private final StorageConfig.StorageMode storageMode;
 
     private final AtomicInteger usedStorage = new AtomicInteger(0);
 

@@ -36,6 +36,7 @@ public class FileStorage implements IStorage {
 
     @Override
     public void get(int position, byte[] destination) throws IOException {
+        // Absolutely read with position is more efficient
         fileChannel.read(ByteBuffer.wrap(destination), position);
     }
 
