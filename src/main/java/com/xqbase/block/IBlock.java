@@ -4,15 +4,16 @@ import com.xqbase.pointer.Pointer;
 import com.xqbase.stroage.StorageConfig;
 
 import java.io.Closeable;
+import java.io.IOException;
 
 public interface IBlock extends Comparable<IBlock>, Closeable {
 
     /**
      * Get item located at specific position and update the access time
-     * @param position the position
+     * @param pointer the retrieve pointer
      * @return binary content of item
      */
-    byte[] get(int position);
+    byte[] get(Pointer pointer) throws IOException;
 
     /**
      * Store the item

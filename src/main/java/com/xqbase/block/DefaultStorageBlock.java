@@ -3,6 +3,7 @@ package com.xqbase.block;
 import com.xqbase.pointer.Pointer;
 import com.xqbase.stroage.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -46,9 +47,35 @@ public class DefaultStorageBlock implements IBlock {
         }
     }
 
+    /**
+     * Create a new storage block
+     * @param file the storage file
+     * @param index the file index
+     * @param capacity capacity of block
+     * @param storageMode storage-mode of the block
+     */
+    public DefaultStorageBlock(File file, int index, int capacity, StorageConfig.StorageMode storageMode) throws IOException {
+        this.index = index;
+        this.capacity = capacity;
+        this.storageMode = storageMode;
+        switch (storageMode) {
+            case File:
+                this.underlyingStorage = new FileStorage(file, capacity);
+                break;
+            case MapFile:
+                this.underlyingStorage = new MapFileStorage(file, capacity);
+                break;
+            case OffHeap:
+                this.underlyingStorage = new OffHeapStorage(capacity);
+                break;
+        }
+    }
+
     @Override
-    public byte[] get(int position) {
-        return new byte[0];
+    public byte[] get(Pointer pointer) throws IOException {
+        byte[] value = new byte[pointer.getValueSize()];
+        this.underlyingStorage.get(pointer.getMetaOffset() + ItemMeta.META_SIZE + pointer.getKeySize(), value);
+        return value;
     }
 
     @Override
@@ -63,17 +90,17 @@ public class DefaultStorageBlock implements IBlock {
 
     @Override
     public long getCapacity() {
-        return 0;
+        return this.capacity;
     }
 
     @Override
     public long getDirty() {
-        return 0;
+        return this.dirtyStorage.get();
     }
 
     @Override
     public long getUsed() {
-        return 0;
+        return this.usedStorage.get();
     }
 
     @Override
@@ -83,22 +110,20 @@ public class DefaultStorageBlock implements IBlock {
 
     @Override
     public int getIndex() {
-        return 0;
+        return this.index;
     }
 
     @Override
     public StorageConfig.StorageMode getStorageMode() {
-        return null;
+        return this.storageMode;
     }
 
     @Override
     public void free() {
-
     }
 
     @Override
     public void close() throws IOException {
-
     }
 
     private static class Allocation {

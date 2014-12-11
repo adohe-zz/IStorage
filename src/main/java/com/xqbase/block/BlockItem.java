@@ -6,16 +6,18 @@ public class BlockItem {
     private byte[] key;
     private byte[] value;
 
-    public BlockItem(byte[] key, byte[] value) {
+    public BlockItem(byte[] key, byte[] value, ItemMeta meta) {
         this.key = key;
         this.value = value;
-        this.meta = null;
+        this.meta = meta;
+    }
+
+    public BlockItem(byte[] key, byte[] value) {
+        this(key, value, null);
     }
 
     public BlockItem(ItemMeta meta) {
-        this.key = null;
-        this.value = null;
-        this.meta = meta;
+        this(null, null, meta);
     }
 
     public byte[] getKey() {
