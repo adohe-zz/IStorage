@@ -80,6 +80,14 @@ public class DefaultStorageBlock implements IBlock {
 
     @Override
     public Pointer store(byte[] key, byte[] value, long ttl) {
+        int payLoad = key.length + value.length;
+        Allocation allocation = allocate(payLoad);
+        if (allocation == null)
+            return null;
+        return store(allocation, key, value, ttl);
+    }
+
+    private Pointer store(Allocation allocation, byte[] key, byte[] value, long ttl) {
         return null;
     }
 
@@ -126,6 +134,26 @@ public class DefaultStorageBlock implements IBlock {
     public void close() throws IOException {
     }
 
+
+    @Override
+    public int compareTo(IBlock o) {
+        return 0;
+    }
+
+    /**
+     * Check the block capacity enough for this payLoad
+     * @param payLoad payLoad
+     * @return {@code null} if this block can't allocate
+     * this payLoad
+     */
+    private Allocation allocate(int payLoad) {
+        int offset = currentItemOffset.addAndGet(ItemMeta.META_SIZE + payLoad);
+
+        if (capacity < offset)
+            return null;
+        return new Allocation(offset - ItemMeta.META_SIZE  - payLoad);
+    }
+
     private static class Allocation {
 
         private int itemOffset;
@@ -133,10 +161,5 @@ public class DefaultStorageBlock implements IBlock {
         public Allocation(int itemOffset) {
             this.itemOffset = itemOffset;
         }
-    }
-
-    @Override
-    public int compareTo(IBlock o) {
-        return 0;
     }
 }

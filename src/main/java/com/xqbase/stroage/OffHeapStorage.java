@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Off heap storage
@@ -83,7 +84,7 @@ public class OffHeapStorage implements IStorage {
 
     @Override
     public void free() {
-
+        // default do nothing
     }
 
     @Override
