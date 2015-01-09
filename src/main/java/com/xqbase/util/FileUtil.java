@@ -8,6 +8,11 @@ import java.util.List;
 
 import static java.nio.file.Files.isSymbolicLink;
 
+/**
+ * Common File Operation Utility.
+ *
+ * @author Tony He
+ */
 public class FileUtil {
 
     /**
@@ -29,7 +34,7 @@ public class FileUtil {
     }
 
     /**
-     * List all files under the specific directory
+     * Lists all files under the specific directory
       * @param dir directory
      * @return file list
      */
@@ -67,7 +72,7 @@ public class FileUtil {
     }
 
     /**
-     * Clean a directory without delete it
+     * Cleans a directory without delete it
      * @param directory directory to clean
      * @throws java.io.IOException in case cleaning is unsuccessful
      */
