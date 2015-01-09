@@ -23,7 +23,7 @@ public class FileUtil {
      * @param file the name of a file
      * @return true if the file is valid, false otherwise
      */
-    public static boolean isFilenameValid(String file) {
+    public static boolean isFilenameValid(final String file) {
         File f = new File(file);
         try {
             f.getCanonicalPath();
@@ -38,7 +38,7 @@ public class FileUtil {
       * @param dir directory
      * @return file list
      */
-    public static List<File> listFiles(File dir){
+    public static List<File> listFiles(final File dir){
         List<File> list = new ArrayList<File>();
         if(dir != null && dir.exists()) {
             for (File f : dir.listFiles()) {

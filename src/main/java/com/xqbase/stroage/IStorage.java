@@ -3,6 +3,11 @@ package com.xqbase.stroage;
 import java.io.Closeable;
 import java.io.IOException;
 
+/**
+ * Underlying Storage Interface for real read/write
+ *
+ * @author Tony He
+ */
 public interface IStorage extends Closeable {
 
     String DATA_FILE_SUFFIX = ".data";

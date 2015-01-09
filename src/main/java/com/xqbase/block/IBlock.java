@@ -1,7 +1,7 @@
 package com.xqbase.block;
 
 import com.xqbase.pointer.Pointer;
-import com.xqbase.stroage.StorageConfig;
+import com.xqbase.stroage.StorageConfig.StorageMode;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public interface IBlock extends Comparable<IBlock>, Closeable {
      * Gets storage mode of this block
      * @return storage block
      */
-    StorageConfig.StorageMode getStorageMode();
+    StorageMode getStorageMode();
 
     /**
      * Frees the block storage
