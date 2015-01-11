@@ -15,28 +15,40 @@ import static com.xqbase.stroage.StorageConfig.StorageMode;
 
 public class StorageManager {
 
+    // Default per Block capacity
     private static final long DEFAULT_BLOCK_CAPACITY = 128 * 1024 * 1024L;
 
+    // Default initial number of blocks
     private static final int DEFAULT_INITIAL_NUMBER_OF_BLOCKS = 8;
 
+    // Block counter.
     private final AtomicInteger blockCount = new AtomicInteger(0);
 
+    // Lock for active block change
     private final Lock activeBlockChangeLock = new ReentrantLock();
 
+    // Reference to the current active block
     private volatile IBlock activeBlock;
 
+    // Used block queue.
     private final Queue<IBlock> usedBlocks = new ConcurrentLinkedDeque<IBlock>();
 
+    // Free block queue
     private final Queue<IBlock> freeBlocks = new PriorityBlockingQueue<IBlock>();
 
+    // The storage mode
     private final StorageMode storageMode;
 
+    // The storage directory
     private final String dir;
 
+    // Block capacity variable
     private final int capacityPerBlock;
 
+    // Ration threshold control the block recycle
     private final double dirtyRatioThreshold;
 
+    // Max OffHeap block count
     private int allowedMaxOffHeapBlockCount;
 
     public StorageManager(String dir, int capacityPerBlock, int initNumberOfBlocks, StorageMode storageMode, double dirtyRatioThreshold,
@@ -56,7 +68,7 @@ public class StorageManager {
 
     private void initBlocks(String dir, int initNumberOfBlocks) throws IOException {
         for (int i = 0; i < initNumberOfBlocks; i++) {
-            freeBlocks.add(createBlock(i));
+            freeBlocks.offer(createBlock(i));
             blockCount.incrementAndGet();
         }
 
