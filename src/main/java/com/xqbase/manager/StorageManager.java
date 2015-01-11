@@ -2,6 +2,7 @@ package com.xqbase.manager;
 
 import com.xqbase.block.DefaultStorageBlock;
 import com.xqbase.block.IBlock;
+import com.xqbase.pointer.Pointer;
 
 import java.io.IOException;
 import java.util.Queue;
@@ -88,5 +89,46 @@ public class StorageManager {
         }
 
         return new DefaultStorageBlock(dir, index, capacityPerBlock, storageMode);
+    }
+
+    /**
+     * Puts the key&value pair.
+     */
+    public Pointer put(byte[] key, byte[] value, long ttl) throws IOException {
+        // First try to store in the current active block
+        Pointer pointer = activeBlock.store(key, value, ttl);
+
+        if (pointer != null) {
+            return pointer;
+        } else {
+            // Current active block overflow
+            activeBlockChangeLock.lock();
+            try {
+                // Other thread may change the active block
+                pointer = activeBlock.store(key, value, ttl);
+                if (pointer != null) {
+                    return pointer;
+                } else {
+                    IBlock freeBlock = this.freeBlocks.poll();
+                    if (freeBlock == null) {
+                        freeBlock = createBlock(blockCount.getAndIncrement());
+                    }
+                    pointer = freeBlock.store(key, value, ttl);
+                    this.usedBlocks.add(freeBlock);
+                    this.activeBlock = freeBlock;
+
+                    return pointer;
+                }
+            } finally {
+                activeBlockChangeLock.unlock();
+            }
+        }
+    }
+
+    /**
+     * Gets the pointer related value.
+     */
+    public byte[] get(Pointer pointer) throws IOException {
+        return pointer.getBlock().get(pointer);
     }
 }
